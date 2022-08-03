@@ -1,15 +1,15 @@
 const Constants = {
   projectConfig: '::project-config::',
   even: {
-    bg: 'black',
+    bg: '#392B58',
     color: 'white'
   },
   odd: {
-    bg: 'lightgray',
+    bg: '#99D5C9',
     color: 'black'
   },
   gant: {
-    bg: '#99D5C9',
+    bg: '#645E9D',
     color: 'black'
   }
 }
