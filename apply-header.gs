@@ -18,4 +18,11 @@ function applyHeader() {
   // add the sprints
   computeNumberOfSprints()
 
+  for (let i = 0; i < globals.numberOfSprints; i++) {
+     // apply each sprint column name
+      SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(i+1)
+
+      colNum ++
+  }
+
 }
