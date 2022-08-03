@@ -12,6 +12,9 @@ function applyHeader() {
     // apply each column name
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(columnDef.name)
 
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontWeight('bold')
+
+
     colNum++
   })
 
