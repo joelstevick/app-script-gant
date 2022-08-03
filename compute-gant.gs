@@ -22,16 +22,27 @@ function computeGant() {
   tasks.forEach(task => {
     // ignore completed tasks
     if (task[statusColNo] !== globals.config.completed) {
+
       // determine which sprint that task belongs to
       const sprintNo = Math.ceil(currentPoints / globals.config['sprint-capacity'])
 
       const pallete = Constants.gant
 
       // fill in the bg for the related sprint
-      const colNum = globals.config.schema.length + sprintNo - 1
+      const colNum = globals.config.schema.length + sprintNo
 
-      SpreadsheetApp.getActiveSheet().getRange(row, colNum).setBackground(pallete.bg)
-      SpreadsheetApp.getActiveSheet().getRange(row, colNum).setFontColor(pallete.color)
+      for (let i = 1; i < 20; i++) {
+        const colDelta = globals.config.schema.length
+        const j = i + colDelta
+
+        if (i === colNum) {
+          SpreadsheetApp.getActiveSheet().getRange(row, j).setBackground(pallete.bg)
+          SpreadsheetApp.getActiveSheet().getRange(row, j).setFontColor(pallete.color)
+        } else {
+          SpreadsheetApp.getActiveSheet().getRange(row, j).clearFormat()
+
+        }
+      }
 
       // locate the story points column and accumulate them
       currentPoints += task[pointsColNo]
