@@ -32,8 +32,7 @@ function computeGant() {
       const colNum = globals.config.schema.length + sprintNo
 
       for (let i = 1; i < 20; i++) {
-        const colDelta = globals.config.schema.length
-        const j = i + colDelta
+        const j = i + 1
 
         if (i === colNum) {
           SpreadsheetApp.getActiveSheet().getRange(row, j).setBackground(pallete.bg)
