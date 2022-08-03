@@ -46,8 +46,17 @@ function computeGant() {
       // accumulate the story points from the designated column
       currentPoints += task[pointsColNo]
 
-      row++
+    } else {
+      // completed, clear all
+      for (let i = 0; i < 20; i++) {
+        const translatedI = globals.config.schema.length + i + 1
+        SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearFormat()
+        SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearContent()
+      }
     }
+
+    // next row
+    row++
   })
 }
 
