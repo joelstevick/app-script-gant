@@ -21,8 +21,8 @@ function computeNumberOfSprints() {
   // compute the starting date
   let startDateMs = Date.parse(globals.config['start-date'])
 
-  if (Date.now > startDateMs) {
-    startDateMs = Data.now
+  if (Date.now() > startDateMs) {
+    startDateMs = Date.now()
   }
 
   globals.startDateMs = startDateMs
