@@ -24,6 +24,11 @@ function applyHeader() {
     // apply each sprint column name
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(sprintStartDate)
 
+    pallete = i % 2 === 0 ? Constants.even : Constants.odd
+
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(pallete.bg)
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(pallete.color)
+
     sprintStartDate.setDate(sprintStartDate.getDate() + 2 * 7)
 
     colNum++
