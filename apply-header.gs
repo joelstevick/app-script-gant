@@ -4,7 +4,6 @@ function applyHeader() {
 
   // clear the header
   headerRange.clearContent();
-  headerRange.clearFormat();
 
   // add each header column from the schema
   let colNum = 1
