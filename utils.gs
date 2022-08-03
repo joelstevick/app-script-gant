@@ -8,6 +8,7 @@ function computeNumberOfSprints() {
   const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
   const statusColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("status"))
 
+  // determine the total number of sprints
   tasks.forEach(task => {
     // ignore completed tasks
     if (task[statusColNo] !== globals.config.completed) {
@@ -16,4 +17,13 @@ function computeNumberOfSprints() {
     }
   })
   globals.numberOfSprints = Math.ceil(totalPoints / globals.config['sprint-capacity'])
+
+  // compute the starting date
+  let startDateMs = Date.parse(globals.config['start-date'])
+
+  if (Date.now > startDateMs) {
+    startDateMs = Data.now
+  }
+
+  globals.startDateMs = startDateMs
 }

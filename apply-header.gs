@@ -18,9 +18,11 @@ function applyHeader() {
   // add the sprints
   computeNumberOfSprints()
 
+  let sprintStartDate = new Date(globals.startDateMs)
+
   for (let i = 0; i < globals.numberOfSprints; i++) {
      // apply each sprint column name
-      SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(i+1)
+      SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(sprintStartDate)
 
       colNum ++
   }
