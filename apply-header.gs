@@ -15,5 +15,7 @@ function applyHeader() {
       colNum ++
   })
 
-  // 
+  // add the sprints
+  computeNumberOfSprints()
+
 }
