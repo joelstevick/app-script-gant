@@ -21,7 +21,7 @@ function computeGant() {
   let row = 3
   tasks.forEach(task => {
     // ignore completed tasks
-    if (task[statusColNo] !== globals.config.completed) {
+    if (task[statusColNo] !== globals.config['status-completed']) {
 
       // determine which sprint that task belongs to
       const firstSprintNo = Math.floor(currentPoints / globals.config['sprint-capacity'])
