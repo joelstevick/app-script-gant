@@ -9,7 +9,7 @@ const Constants = {
     color: 'black'
   },
   gant: {
-     bg: 'lightgray',
-    color: 'white'
+    bg: '#99D5C9',
+    color: 'black'
   }
 }
