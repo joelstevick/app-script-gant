@@ -7,5 +7,9 @@ const Constants = {
   odd: {
     bg: 'green',
     color: 'white'
+  },
+  gant: {
+     bg: 'gray',
+    color: 'white'
   }
 }
