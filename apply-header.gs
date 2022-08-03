@@ -14,7 +14,6 @@ function applyHeader() {
 
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontWeight('bold')
 
-
     colNum++
   })
 
