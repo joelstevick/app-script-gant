@@ -3,7 +3,8 @@ function applyHeader() {
   const headerRange = SpreadsheetApp.getActiveSheet().getRange("A2:Z2");
 
   // clear the header
-  headerRange.clearContent();
+  headerRange.clearContent()
+  headerRange.clearFormat();
 
   // add each header column from the schema
   let colNum = 1
