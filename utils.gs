@@ -16,7 +16,7 @@ function computeNumberOfSprints() {
       totalPoints += task[pointsColNo]
     }
   })
-  globals.numberOfSprints = Math.ceil(totalPoints / globals.config['sprint-capacity'])
+  globals.numberOfSprints = Math.ceil(totalPoints / globals.config['sprint-velocity'])
 
   // compute the starting date
   let startDateMs = Date.parse(globals.config['start-date'])

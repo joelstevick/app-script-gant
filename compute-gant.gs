@@ -28,9 +28,9 @@ function computeGant() {
     if (task[statusColNo] !== globals.config['status-completed']) {
 
       // determine which sprint that task belongs to
-      const firstSprintNo = Math.floor(currentPoints / globals.config['sprint-capacity'])
+      const firstSprintNo = Math.floor(currentPoints / globals.config['sprint-velocity'])
 
-      const sprintsSpanned = Math.ceil(task[pointsColNo] / globals.config['sprint-capacity'])
+      const sprintsSpanned = Math.ceil(task[pointsColNo] / globals.config['sprint-velocity'])
 
       const pallete = Constants.gant
 
