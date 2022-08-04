@@ -13,10 +13,11 @@ function computeGant() {
   const tasks = globals.sheet.slice(2)
 
   // accummulate the current story points
-  let currentPoints = 0
+  let currentTeamPoints = {}
   const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
   const statusColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("status"))
   const completedColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("completed"))
+  const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
 
   // determine the total number of sprints
   let row = 3
@@ -24,13 +25,18 @@ function computeGant() {
     // initialize column style
     SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
 
+    // get the team
+    const team = task[teamColNo]
+
     // ignore completed tasks
     if (task[statusColNo] !== globals.config['status-completed']) {
 
       // determine which sprint that task belongs to
-      const firstSprintNo = Math.floor(currentPoints / globals.config['sprint-velocity'])
+      let currPoints = currentTeamPoints[team] || 0
 
-      const lastSprintNo = Math.ceil((task[pointsColNo] + currentPoints) / globals.config['sprint-velocity'])
+      const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity'])
+
+      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity'])
 
       const pallete = Constants.gant
 
@@ -48,7 +54,8 @@ function computeGant() {
       }
 
       // accumulate the story points from the designated column
-      currentPoints += task[pointsColNo]
+      currPoints += task[pointsColNo]
+      currentTeamPoints[team] = currPoints
 
     } else {
       // completed
