@@ -21,6 +21,9 @@ function computeGant() {
   // determine the total number of sprints
   let row = 3
   tasks.forEach(task => {
+    // initialize column style
+    SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
+
     // ignore completed tasks
     if (task[statusColNo] !== globals.config['status-completed']) {
 
@@ -50,7 +53,7 @@ function computeGant() {
     } else {
       // completed
 
-      // clear all
+      // clear all gant columns
       for (let i = 0; i < 20; i++) {
         const translatedI = globals.config.schema.length + i + 1
         SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearFormat()
@@ -67,7 +70,7 @@ function computeGant() {
 
       if (completed.getTime() >= threshold.getTime()) {
         const bg = globals.config['completed-highlight-color'] || 'yellow'
-        SpreadsheetApp.getActiveSheet().getRange(row, completedColNo).setBackground(bg)
+        SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).setBackground(bg)
       }
     }
 
