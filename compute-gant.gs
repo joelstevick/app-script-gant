@@ -16,6 +16,7 @@ function computeGant() {
   let currentPoints = 0
   const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
   const statusColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("status"))
+  const completedColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("completed"))
 
   // determine the total number of sprints
   let row = 3
@@ -47,11 +48,26 @@ function computeGant() {
       currentPoints += task[pointsColNo]
 
     } else {
-      // completed, clear all
+      // completed
+
+      // clear all
       for (let i = 0; i < 20; i++) {
         const translatedI = globals.config.schema.length + i + 1
         SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearFormat()
         SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearContent()
+      }
+
+      // highlight, if recently completed
+      const completedHighlightAgeDays = globals.config['completed-highlight-age'] || 14
+
+      const threshold = new Date()
+      threshold.setDate(threshold.getDate() - completedHighlightAgeDays)
+
+      const completed = new Date(task[completedColNo])
+
+      if (completed.getTime() >= threshold.getTime()) {
+        const bg = globals.config['completed-highlight-color'] || 'yellow'
+        SpreadsheetApp.getActiveSheet().getRange(row, completedColNo).setBackground(bg)
       }
     }
 
