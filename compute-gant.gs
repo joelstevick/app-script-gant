@@ -29,7 +29,7 @@ function computeGant() {
     const team = task[teamColNo]
 
     // ignore completed tasks
-    if (task[statusColNo] !== globals.config['status-completed']) {
+    if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
 
       // determine which sprint that task belongs to
       let currPoints = currentTeamPoints[team] || 0
@@ -56,7 +56,7 @@ function computeGant() {
       currPoints += task[pointsColNo]
       currentTeamPoints[team] = currPoints
 
-    } else {
+    } else if (team) {
       // completed
 
       // clear all gant columns

@@ -29,9 +29,11 @@ function computeNumberOfSprints() {
   // for each team, calculate the required sprints
   const sprints = []
   for (let team of Object.keys(teamPoints)) {
-    const teamVelocity = globals.config.team[team]['velocity']
-    const teamSprintsRequired = Math.ceil(teamPoints[team] / teamVelocity)
-    sprints.push(teamSprintsRequired)
+    if (team) {
+      const teamVelocity = globals.config.team[team]['velocity']
+      const teamSprintsRequired = Math.ceil(teamPoints[team] / teamVelocity)
+      sprints.push(teamSprintsRequired)
+    }
   }
 
   globals.numberOfSprints = Math.max(...sprints)
