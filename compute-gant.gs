@@ -30,7 +30,7 @@ function computeGant() {
       // determine which sprint that task belongs to
       const firstSprintNo = Math.floor(currentPoints / globals.config['sprint-velocity'])
 
-      const sprintsSpanned = Math.ceil(task[pointsColNo] / globals.config['sprint-velocity'])
+      const sprintsSpanned = Math.ceil((task[pointsColNo] + currentPoints) / globals.config['sprint-velocity'])
 
       const pallete = Constants.gant
 
