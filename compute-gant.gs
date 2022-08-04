@@ -30,7 +30,7 @@ function computeGant() {
       // determine which sprint that task belongs to
       const firstSprintNo = Math.floor(currentPoints / globals.config['sprint-velocity'])
 
-      const sprintsSpanned = Math.ceil((task[pointsColNo] + currentPoints) / globals.config['sprint-velocity'])
+      const lastSprintNo = Math.ceil((task[pointsColNo] + currentPoints) / globals.config['sprint-velocity'])
 
       const pallete = Constants.gant
 
@@ -39,7 +39,7 @@ function computeGant() {
         const translatedI = globals.config.schema.length + i + 1
 
         console.log(i, firstSprintNo)
-        if (i === firstSprintNo || (i > firstSprintNo && i < firstSprintNo + sprintsSpanned)) {
+        if (i === firstSprintNo || (i > firstSprintNo && i < lastSprintNo)) {
           SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setBackground(pallete.bg)
           SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setFontColor(pallete.color)
         } else {
