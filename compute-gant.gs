@@ -38,7 +38,7 @@ function computeGant() {
 
       const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity'])
 
-      const pallete = Constants.gant
+      const teamBg = globals.config.team[team]['bg']
 
       // fill in the bg for the related sprint
       for (let i = 0; i < 20; i++) {
@@ -46,8 +46,7 @@ function computeGant() {
 
         console.log(i, firstSprintNo)
         if (i === firstSprintNo || (i > firstSprintNo && i < lastSprintNo)) {
-          SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setBackground(pallete.bg)
-          SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setFontColor(pallete.color)
+          SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setBackground(teamBg)
         } else {
           SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearFormat()
         }
