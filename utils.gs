@@ -38,12 +38,18 @@ function computeNumberOfSprints() {
 
   globals.numberOfSprints = Math.max(...sprints)
 
-  // compute the starting date
+  // compute the starting date and the ending date; If the ending for the sprint is in the past, then pick the
+  // current sprint according to the sprint-boundary defined by the project start date
   let startDateMs = Date.parse(globals.config['start-date'])
+  let endingDate = new Date(startDateMs)
+  endingDate.setDate(endingDate.getDate() + Constants.sprintDays)
 
-  if (Date.now() > startDateMs) {
-    startDateMs = Date.now()
+  while (Date.now() > endingDate.getTime()) {
+    endingDate.setDate(endingDate.getDate() + Constants.sprintDays)
   }
 
-  globals.startDateMs = startDateMs
+  const startDate = new Date(endingDate.getTime())
+  startDate.setDate(startDate.getDate() - Constants.sprintDays)
+
+  globals.startDateMs = startDate.getTime()
 }

@@ -7,5 +7,6 @@ const Constants = {
   odd: {
     bg: '#fefae0',
     color: 'black'
-  }
+  },
+  sprintDays: 14
 }
