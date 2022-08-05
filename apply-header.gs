@@ -32,7 +32,7 @@ function applyHeader() {
     // apply each sprint column name
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(sprintStartDate)
 
-    pallete = i % 2 === 0 ? Constants.even : Constants.odd
+    let pallete = i % 2 === 0 ? Constants.even : Constants.odd
 
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(pallete.bg)
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(pallete.color)
@@ -42,4 +42,11 @@ function applyHeader() {
     colNum++
   }
 
+  // add the release date
+  const releaseDate = sprintStartDate
+  releaseDate.setDate(releaseDate.getDate() + globals.config.release['allowance-days'])
+
+  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(`Release: ` + releaseDate.toLocaleDateString())
+  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(globals.config.release.bg)
+  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(globals.config.release.color)
 }
