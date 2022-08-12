@@ -36,6 +36,7 @@ function applyHeader() {
 
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(pallete.bg)
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(pallete.color)
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setHorizontalAlignment("left")
 
     sprintStartDate.setDate(sprintStartDate.getDate() + 2 * 7)
 
