@@ -26,28 +26,32 @@ function applyHeader() {
   // add the sprints
   computeNumberOfSprints()
 
-  let sprintStartDate = new Date(globals.startDateMs)
+  let sprintLabel = new Date(globals.startDateMs)
+  // display end of sprint as the label
+  const labelOffsetDays = 2 * 7
+  sprintLabel.setDate(sprintLabel.getDate() + labelOffsetDays)
 
   for (let i = 0; i < globals.numberOfSprints; i++) {
     // apply each sprint column name
-    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(sprintStartDate)
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(sprintLabel)
 
     let pallete = i % 2 === 0 ? Constants.even : Constants.odd
 
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(pallete.bg)
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(pallete.color)
-    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setHorizontalAlignment("left")
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setHorizontalAlignment("right")
 
-    sprintStartDate.setDate(sprintStartDate.getDate() + 2 * 7)
+    sprintLabel.setDate(sprintLabel.getDate() + 2 * 7)
 
     colNum++
   }
 
   // add the release date
-  const releaseDate = sprintStartDate
+  const releaseDate = sprintLabel
+  releaseDate.setDate(releaseDate.getDate() - labelOffsetDays)
   releaseDate.setDate(releaseDate.getDate() + globals.config.release['allowance-days'])
 
-  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(`Release: ` + releaseDate.toLocaleDateString())
+  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(`Dev Completed: ` + releaseDate.toLocaleDateString())
   SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(globals.config.release.bg)
   SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(globals.config.release.color)
 }
