@@ -58,8 +58,10 @@ function computeGant() {
     } else if (team) {
       // completed
 
+      const maxGantColumns = 20
+
       // clear all gant columns
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < maxGantColumns; i++) {
         const translatedI = globals.config.schema.length + i + 1
         SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearFormat()
         SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearContent()
@@ -77,6 +79,12 @@ function computeGant() {
         const bg = globals.config['completed-highlight-color'] || 'yellow'
         SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).setBackground(bg)
       }
+
+      // change the foreground color for the entire row
+      for (let col = 1; col <= globals.config.schema.length; col++) {
+        SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
+      }
+
     }
 
     // next row
