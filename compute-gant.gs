@@ -44,7 +44,6 @@ function computeGant() {
       for (let i = 0; i < 20; i++) {
         const translatedI = globals.config.schema.length + i + 1
 
-        console.log(i, firstSprintNo)
         if (i === firstSprintNo || (i > firstSprintNo && i < lastSprintNo)) {
           SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setBackground(teamBg)
         } else {
