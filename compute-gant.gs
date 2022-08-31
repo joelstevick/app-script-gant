@@ -30,12 +30,8 @@ function computeGant() {
     // initialize column style
     SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
 
-    // get the team
-    const team = task[teamColNo]
-
-    // ignore completed tasks
-    if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
-
+    // run gant engine against a task
+    function runGantEngine(task, team) {
       // determine which sprint that task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
@@ -60,9 +56,17 @@ function computeGant() {
       currPoints += task[pointsColNo]
       currentTeamPoints[team] = currPoints
 
+    }
+    // get the team
+    const team = task[teamColNo]
+
+    // ignore completed tasks
+    if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
+
+      runGantEngine(task, team);
+
     } else if (team) {
       // completed
-
       const maxGantColumns = 20
 
       // clear all gant columns
