@@ -20,6 +20,10 @@ function computeGant() {
   const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
   const ticketColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("ticket"))
 
+  // keep track of tasks that had more than a single sprint's worth of points
+  const SPRINT = 13
+  const residualTasks = []
+
   // determine the total number of sprints
   let row = 3
   tasks.forEach(task => {
@@ -31,7 +35,7 @@ function computeGant() {
 
     // ignore completed tasks
     if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
-      
+
       // determine which sprint that task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
