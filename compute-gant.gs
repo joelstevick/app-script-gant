@@ -20,7 +20,7 @@ function computeGant() {
   const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
   const ticketColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("ticket"))
 
-  // keep track of tasks that had more than a single sprint's worth of points
+  // keep track of tasks that had more than a single sprint's worth of points (this is a work-in-progress)
   const SPRINT = 13
   const residualTasks = []
 
