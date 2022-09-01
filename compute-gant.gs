@@ -35,7 +35,7 @@ function runGantEngine(tasks) {
     // ignore completed tasks
     if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
 
-      // determine which sprint that task belongs to
+      // determine which sprint that the task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
       const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity'])
