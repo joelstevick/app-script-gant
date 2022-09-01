@@ -12,6 +12,9 @@ function computeGant() {
   // read all of the rows below the header
   const tasks = globals.sheet.slice(2)
 
+  runGantEngine(tasks)
+}
+function runGantEngine(tasks) {
   // accummulate the current story points
   let currentTeamPoints = {}
   const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
@@ -20,29 +23,24 @@ function computeGant() {
   const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
   const ticketColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("ticket"))
 
-  // keep track of tasks that had more than a single sprint's worth of points (this is a work-in-progress)
-  const SPRINT = 13
-  
   // determine the total number of sprints
   let row = 3
   tasks.forEach(task => {
     // initialize column style
     SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
 
-    // run gant engine against a task
-    function runGantEngine(task, team) {
-      // cannot exceed a sprint's worth of points
-      const taskPoints = Math.min(SPRINT, task[pointsColNo])
-      
-      if (task[pointsColNo] > taskPoints) {
-        task[pointsColNo] -= taskPoints
-      }
+    // get the team
+    const team = task[teamColNo]
+
+    // ignore completed tasks
+    if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
+
       // determine which sprint that task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
       const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity'])
 
-      const lastSprintNo = Math.ceil((taskPoints + currPoints) / globals.config.team[team]['velocity'])
+      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity'])
 
       const teamBg = globals.config.team[team]['bg']
 
@@ -58,26 +56,12 @@ function computeGant() {
       }
 
       // accumulate the story points from the designated column
-      currPoints += taskPoints
+      currPoints += task[pointsColNo]
       currentTeamPoints[team] = currPoints
-
-      // if we crossed a sprint boundary, re-run
-      if (lastSprintNo !== firstSprintNo) {
-        
-      }
-      
-
-    }
-    // get the team
-    const team = task[teamColNo]
-
-    // ignore completed tasks
-    if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
-
-      runGantEngine(task, team);
 
     } else if (team) {
       // completed
+
       const maxGantColumns = 20
 
       // clear all gant columns
