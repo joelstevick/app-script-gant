@@ -22,8 +22,7 @@ function computeGant() {
 
   // keep track of tasks that had more than a single sprint's worth of points (this is a work-in-progress)
   const SPRINT = 13
-  const residualTasks = []
-
+  
   // determine the total number of sprints
   let row = 3
   tasks.forEach(task => {
@@ -32,12 +31,18 @@ function computeGant() {
 
     // run gant engine against a task
     function runGantEngine(task, team) {
+      // cannot exceed a sprint's worth of points
+      const taskPoints = Math.min(SPRINT, task[pointsColNo])
+      
+      if (task[pointsColNo] > taskPoints) {
+        task[pointsColNo] -= taskPoints
+      }
       // determine which sprint that task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
       const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity'])
 
-      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity'])
+      const lastSprintNo = Math.ceil((taskPoints + currPoints) / globals.config.team[team]['velocity'])
 
       const teamBg = globals.config.team[team]['bg']
 
@@ -53,8 +58,14 @@ function computeGant() {
       }
 
       // accumulate the story points from the designated column
-      currPoints += task[pointsColNo]
+      currPoints += taskPoints
       currentTeamPoints[team] = currPoints
+
+      // if we crossed a sprint boundary, re-run
+      if (lastSprintNo !== firstSprintNo) {
+        
+      }
+      
 
     }
     // get the team
