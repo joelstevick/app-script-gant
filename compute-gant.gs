@@ -59,9 +59,9 @@ function runGantEngine(tasks) {
       currPoints += task[pointsColNo]
       currentTeamPoints[team] = currPoints
 
-    } else if (team) {
-      // completed
+    } else if (team || task[statusColNo] === globals.config['status-deferred']) {
 
+      // completed or deferred
       const maxGantColumns = 20
 
       // clear all gant columns
@@ -86,9 +86,13 @@ function runGantEngine(tasks) {
 
       // change the foreground color for the entire row
       for (let col = 1; col <= globals.config.schema.length; col++) {
-        SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
+        if (globals.config.team[team] && task[statusColNo] === globals.config['status-completed']) {
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
+        } else if (task[statusColNo] === globals.config['status-deferred']) {
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || 'gray')
+        }
+    
       }
-
     }
 
     // next row
