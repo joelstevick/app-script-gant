@@ -31,6 +31,8 @@ function applyHeader() {
   const labelOffsetDays = 2 * 7
   sprintLabel.setDate(sprintLabel.getDate() + labelOffsetDays)
 
+  // trace
+  trace(`number of sprints = ${globals.numberOfSprints}`)
   for (let i = 0; i < globals.numberOfSprints; i++) {
     // apply each sprint column name
     SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(sprintLabel)

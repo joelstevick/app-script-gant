@@ -8,5 +8,9 @@ const Constants = {
     bg: '#fefae0',
     color: 'black'
   },
-  sprintDays: 14
+  sprintDays: 14,
+  traceCell: {
+    rowNo: 1,
+    colNo: 1
+  }
 }
