@@ -20,7 +20,7 @@ function computeNumberOfSprints() {
     // ignore completed tasks or tasks that are not assigned to a team
     if (task[statusColNo] !== globals.config['status-completed'] && task[teamColNo].trim().length > 0) {
       // locate the story points column
-      currPoints += task[pointsColNo]
+      currPoints += task[pointsColNo] || 0
 
       teamPoints[team] = currPoints
     }
