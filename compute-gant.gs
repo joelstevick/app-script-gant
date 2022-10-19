@@ -89,9 +89,9 @@ function runGantEngine(tasks) {
         if (globals.config.team[team] && task[statusColNo] === globals.config['status-completed']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
         } else if (task[statusColNo] === globals.config['status-deferred']) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || 'gray')
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || 'lightgray')
         } else if (task[statusColNo] === globals.config['status-cannot-reproduce']) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'gray')
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'lightgray')
         } 
     
       }
