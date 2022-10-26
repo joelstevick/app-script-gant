@@ -26,11 +26,14 @@ function runGantEngine(tasks) {
   // determine the total number of sprints
   let row = 3
   tasks.forEach(task => {
-    // initialize column style
-    SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
 
     // get the team
     const team = task[teamColNo]
+
+    // initialize column style (for tasks that are assigned to a team)
+    if (team) {
+      SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
+    }
 
     // ignore completed tasks
     if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
@@ -92,8 +95,8 @@ function runGantEngine(tasks) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || 'lightgray')
         } else if (task[statusColNo] === globals.config['status-cannot-reproduce']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'lightgray')
-        } 
-    
+        }
+
       }
     }
 
