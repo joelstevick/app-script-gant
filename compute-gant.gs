@@ -37,9 +37,17 @@ function runGantEngine(tasks) {
     taskIgnored = !taskIgnored && !team
 
     // initialize column style (for tasks that are assigned to a team)
-    if (team) {
+    if (team || taskIgnored) {
       SpreadsheetApp.getActiveSheet().getRange(row, completedColNo + 1).clearFormat()
     }
+
+    // reset the task font color
+    for (let col = 1; col <= globals.config.schema.length; col++) {
+      if (team || taskIgnored) {
+        SpreadsheetApp.getActiveSheet().getRange(row, col).clearFormat()
+      }
+    }
+
 
     // ignore completed tasks
     if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
@@ -101,6 +109,7 @@ function runGantEngine(tasks) {
 
       // change the foreground color for the entire row
       for (let col = 1; col <= globals.config.schema.length; col++) {
+
         if (globals.config.team[team] && task[statusColNo] === globals.config['status-completed']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
         } else if (task[statusColNo] === globals.config['status-deferred']) {
@@ -110,7 +119,7 @@ function runGantEngine(tasks) {
         } else if (task[statusColNo] === globals.config['status-replaced']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')
         } else if (taskIgnored) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontLine("line-through")
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['ignored-row-font-color'] || 'red')
         }
 
       }
