@@ -109,6 +109,8 @@ function runGantEngine(tasks) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'lightgray')
         } else if (task[statusColNo] === globals.config['status-replaced']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')
+        } else if (taskIgnored) {
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontLine("line-through")
         }
 
       }
