@@ -27,8 +27,14 @@ function runGantEngine(tasks) {
   let row = 3
   tasks.forEach(task => {
 
-    // get the team
-    const team = task[teamColNo]
+    // get the team.  Ignore tasks that have a team that starts with "?"
+    let team = task[teamColNo]
+
+    let taskIgnored = !team
+
+    team = checkIgnoreTeam(team)
+
+    taskIgnored = !taskIgnored && !team
 
     // initialize column style (for tasks that are assigned to a team)
     if (team) {
@@ -63,11 +69,12 @@ function runGantEngine(tasks) {
       currentTeamPoints[team] = currPoints
 
     } else if (
-      team 
-      || task[statusColNo] === globals.config['status-cannot-reproduce'] 
+      team
+      || task[statusColNo] === globals.config['status-cannot-reproduce']
       || task[statusColNo] === globals.config['status-deferred']
       || task[statusColNo] === globals.config['status-replaced']
-      ) {
+      || taskIgnored
+    ) {
 
       // completed, replaced or deferred
       const maxGantColumns = 20
@@ -101,7 +108,8 @@ function runGantEngine(tasks) {
         } else if (task[statusColNo] === globals.config['status-cannot-reproduce']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'lightgray')
         } else if (task[statusColNo] === globals.config['status-replaced']) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')}
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')
+        }
 
       }
     }

@@ -1,5 +1,12 @@
-function computeNumberOfSprints() {
+function checkIgnoreTeam(team) {
+  // if the team name is prepended with "?", then ignore the task
+  if (team && team[0] === '?') {
+    team = ""
+  }
 
+  return team
+}
+function computeNumberOfSprints() {
 
   // read all of the rows below the header
   const tasks = globals.sheet.slice(2)
@@ -14,7 +21,10 @@ function computeNumberOfSprints() {
   // determine the total number of sprints, for each team
   tasks.forEach(task => {
 
-    const team = task[teamColNo]
+    let team = task[teamColNo]
+
+    team = checkIgnoreTeam(team)
+
     let currPoints = teamPoints[team] || 0
 
     // ignore completed tasks or tasks that are not assigned to a team
@@ -29,6 +39,8 @@ function computeNumberOfSprints() {
   // for each team, calculate the required sprints
   const sprints = []
   for (let team of Object.keys(teamPoints)) {
+    team = checkIgnoreTeam(team)
+    
     if (team) {
       const teamVelocity = globals.config.team[team]['velocity']
       const teamSprintsRequired = Math.ceil(teamPoints[team] / teamVelocity)
