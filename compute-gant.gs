@@ -119,7 +119,7 @@ function runGantEngine(tasks) {
         } else if (task[statusColNo] === globals.config['status-replaced']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')
         } else if (taskIgnored) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['ignored-row-font-color'] || 'red')
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['ignored-row-font-color'] || 'orange')
         }
 
       }
