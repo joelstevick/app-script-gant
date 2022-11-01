@@ -62,9 +62,14 @@ function runGantEngine(tasks) {
       currPoints += task[pointsColNo]
       currentTeamPoints[team] = currPoints
 
-    } else if (team || task[statusColNo] === globals.config['status-cannot-reproduce'] || task[statusColNo] === globals.config['status-deferred']) {
+    } else if (
+      team 
+      || task[statusColNo] === globals.config['status-cannot-reproduce'] 
+      || task[statusColNo] === globals.config['status-deferred']
+      || task[statusColNo] === globals.config['status-replaced']
+      ) {
 
-      // completed or deferred
+      // completed, replaced or deferred
       const maxGantColumns = 20
 
       // clear all gant columns
@@ -95,7 +100,8 @@ function runGantEngine(tasks) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || 'lightgray')
         } else if (task[statusColNo] === globals.config['status-cannot-reproduce']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'lightgray')
-        }
+        } else if (task[statusColNo] === globals.config['status-replaced']) {
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')}
 
       }
     }
