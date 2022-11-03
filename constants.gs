@@ -12,5 +12,6 @@ const Constants = {
   traceCell: {
     rowNo: 1,
     colNo: 1
-  }
+  },
+  endOfTasksString: '::end-of-tasks::'
 }

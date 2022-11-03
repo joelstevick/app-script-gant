@@ -25,11 +25,23 @@ function runGantEngine(tasks) {
 
   // determine the total number of sprints
   let row = 3
+  let endOfTasks = false;
+
   tasks.forEach(task => {
+
 
     // get the team.  Ignore tasks that have a team that starts with "?"
     let team = task[teamColNo]
 
+    // check for end of task list
+    if (team.includes(Constants.endOfTasksString)) {
+      endOfTasks = true;
+    }
+
+    if (endOfTasks) {
+      return;
+    }
+    
     let taskIgnored = !team
 
     team = checkIgnoreTeam(team)

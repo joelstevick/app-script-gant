@@ -18,6 +18,7 @@ function computeNumberOfSprints() {
   const statusColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("status"))
   const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
 
+  let endOfTasks = false;
   // determine the total number of sprints, for each team
   tasks.forEach(task => {
 
@@ -25,6 +26,16 @@ function computeNumberOfSprints() {
 
     team = checkIgnoreTeam(team)
 
+    // check for end of task list
+    if (team.includes(Constants.endOfTasksString)) {
+      endOfTasks = true;
+    }
+
+    if (endOfTasks) {
+      return;
+    }
+
+    // accumulate the points for this 
     let currPoints = teamPoints[team] || 0
 
     // ignore completed tasks or tasks that are not assigned to a team
@@ -40,7 +51,7 @@ function computeNumberOfSprints() {
   const sprints = []
   for (let team of Object.keys(teamPoints)) {
     team = checkIgnoreTeam(team)
-    
+
     if (team) {
       const teamVelocity = globals.config.team[team]['velocity']
       const teamSprintsRequired = Math.ceil(teamPoints[team] / teamVelocity)
