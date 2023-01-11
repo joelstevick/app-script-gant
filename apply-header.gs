@@ -1,5 +1,5 @@
 function applyHeader() {
-  // get the header
+  // get the header.
   const headerRange = SpreadsheetApp.getActiveSheet().getRange("A2:Z2");
 
   // clear the header
