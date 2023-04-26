@@ -7,9 +7,11 @@ function checkIgnoreTeam(team) {
   return team
 }
 function computeNumberOfSprints() {
-
   // read all of the rows below the header
-  const tasks = globals.sheet.slice(2)
+  const tasks = globals.sheet.slice(3)
+
+  // compute the dependencies between tasks
+  const dependencies = new Dependencies(tasks, 2)
 
   // accummulate the story points
   let teamPoints = {}
