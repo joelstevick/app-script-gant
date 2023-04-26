@@ -5,6 +5,6 @@ function trace(record) {
   const now = new Date()
   traceRecords += `${now.toDateString()} ${now.toTimeString()}: ${record}\n`
 
-  SpreadsheetApp.getActiveSheet().getRange(Constants.traceCell.rowNo, Constants.traceCell.colNo).setValue(traceRecords)
+  SpreadsheetApp.getActiveSheet().getRange(Constants.traceCell.rowNo, Constants.traceCell.colNo).setValue(traceRecords.trim())
 
 }

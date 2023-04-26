@@ -85,3 +85,8 @@ function computeNumberOfSprints() {
 
   globals.startDateMs = startDate.getTime()
 }
+
+function getTaskByTicket(ticket, tasks, ticketColNo) {
+  return tasks.find(task => task[ticketColNo] === ticket)
+}
+
