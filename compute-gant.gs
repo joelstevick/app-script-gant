@@ -32,6 +32,7 @@ function runGantEngine(tasks) {
   const ticketColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("ticket"))
   const dependenciesColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("dependencies"))
 
+  const dependenciesSprints = {}
 
   // determine the total number of sprints
   let row = 3
@@ -69,7 +70,6 @@ function runGantEngine(tasks) {
       }
     }
 
-
     // ignore completed tasks
     if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
 
@@ -79,7 +79,7 @@ function runGantEngine(tasks) {
       // determine which sprint that the task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
-      const  firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + maxDependencySprintNo
+      const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + maxDependencySprintNo
 
       const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + maxDependencySprintNo
 
