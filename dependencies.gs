@@ -40,8 +40,6 @@ class Dependencies {
       rowNo++
     })
 
-    trace(`deps: ${JSON.stringify(this.dependencies)}`)
-
   }
 
   // get the dependencies as tasks

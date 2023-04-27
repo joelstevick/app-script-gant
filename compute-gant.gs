@@ -21,7 +21,7 @@ function computeGant() {
 }
 function runGantEngine(tasks) {
   // compute the dependencies between tasks        
-  const dependencies = new Dependencies(tasks, 2)
+  const dependencies = new Dependencies(tasks, 3)
 
   // accummulate the current story points
   let currentTeamPoints = {}
@@ -86,16 +86,20 @@ function runGantEngine(tasks) {
       const teamBg = globals.config.team[team]['bg']
 
       // fill in the bg for the related sprint
-      for (let i = 0; i < 20; i++) {
-        const translatedI = globals.config.schema.length + i + 1
+      for (let col = 0; col < 20; col++) {
+        const translatedI = globals.config.schema.length + col + 1
 
-        if (i === firstSprintNo || (i > firstSprintNo && i < lastSprintNo)) {
+        if (col === firstSprintNo || (col > firstSprintNo && col < lastSprintNo)) {
           SpreadsheetApp.getActiveSheet().getRange(row, translatedI).setBackground(teamBg)
         } else {
           SpreadsheetApp.getActiveSheet().getRange(row, translatedI).clearFormat()
         }
-      }
 
+      }
+      // if this column contains dependencies, then highlight it
+      if (dependencies.getDependencies(task).length > 0) {
+        SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || 'red')
+      }
       // accumulate the story points from the designated column
       currPoints += task[pointsColNo]
       currentTeamPoints[team] = currPoints
