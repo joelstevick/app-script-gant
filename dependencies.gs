@@ -46,7 +46,7 @@ class Dependencies {
 
   // get the dependencies as tasks
   getDependencies(task) {
-
+    return this.dependencies[task] || []
   }
 
 }
