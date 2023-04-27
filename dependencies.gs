@@ -1,39 +1,52 @@
 class Dependencies {
 
-  constructor(tasks, rowNo) {
+  constructor(tasks, firstTaskRowNo) {
+
+    let rowNo = firstTaskRowNo
     this.dependenciesColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("dependencies"))
+    this.ticketColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("ticket"))
+
     this.dependencies = {}
 
-    const sheet = SpreadsheetApp.getActiveSheet()
+    this.sheet = SpreadsheetApp.getActiveSheet()
 
     // for each task parse the dependencies -- a task can have multiple dependencies
     tasks.forEach(task => {
 
       const range = `${alphabet[this.dependenciesColNo]}${rowNo}`
 
-      const formula = sheet.getRange(range).getFormula();
+      const formula = this.sheet.getRange(range).getFormula();
 
       if (formula) {
 
         const dependencies = formula.split(',')
 
         dependencies.forEach(dependency => {
-          var linkedCellReference = dependency.match(/[A-Za-z]+[0-9]+/g)[0];
+          const linkedCellReference = dependency.match(/[A-Za-z]+[0-9]+/g)[0];
 
-          var linkedRowNo = linkedCellReference.match(/\d+/g)[0];
+          const linkedRowNo = linkedCellReference.match(/\d+/g)[0];
 
-          const deps = this.dependencies[rowNo] || []
+          const dependencyTask = tasks[linkedRowNo - firstTaskRowNo]
 
-          deps.push(linkedRowNo)
+          const deps = this.dependencies[task] || []
 
-          this.dependencies[rowNo] = deps
+          deps.push(dependencyTask)
+
+          this.dependencies[task] = deps
         })
-
-        trace(`deps: ${JSON.stringify(this.dependencies)}`)
 
       }
 
       rowNo++
     })
+
+    trace(`deps: ${JSON.stringify(this.dependencies)}`)
+
   }
+
+  // get the dependencies as tasks
+  getDependencies(task) {
+
+  }
+
 }
