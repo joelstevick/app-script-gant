@@ -10,8 +10,6 @@ function computeGant() {
   // read all of the rows below the header
   const tasks = globals.sheet.slice(2)
 
-  // compute the dependencies between tasks
-  const dependencies = new Dependencies(tasks, 2)
 
   // run the gant computation
   runGantEngine(tasks)
@@ -22,6 +20,9 @@ function computeGant() {
 
 }
 function runGantEngine(tasks) {
+   // compute the dependencies between tasks
+  const dependencies = new Dependencies(tasks, 2)
+
   // accummulate the current story points
   let currentTeamPoints = {}
   const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
