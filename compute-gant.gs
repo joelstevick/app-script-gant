@@ -20,7 +20,7 @@ function computeGant() {
 
 }
 function runGantEngine(tasks) {
-   // compute the dependencies between tasks
+  // compute the dependencies between tasks        
   const dependencies = new Dependencies(tasks, 2)
 
   // accummulate the current story points
