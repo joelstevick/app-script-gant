@@ -10,8 +10,6 @@ function computeNumberOfSprints() {
   // read all of the rows below the header
   const tasks = globals.sheet.slice(3)
 
-  // compute the dependencies between tasks
-  const dependencies = new Dependencies(tasks, 2)
 
   // accummulate the story points
   let teamPoints = {}
@@ -19,7 +17,6 @@ function computeNumberOfSprints() {
   const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
   const statusColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("status"))
   const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
-  const dependenciesColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("dependencies"))
 
   let endOfTasks = false;
   // determine the total number of sprints, for each team

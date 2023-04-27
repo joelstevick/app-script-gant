@@ -6,13 +6,20 @@ function computeGant() {
   }
   console.log('config', globals.config);
 
-  applyHeader()
-
   // compute the gant chart for each task
   // read all of the rows below the header
   const tasks = globals.sheet.slice(2)
 
+  // compute the dependencies between tasks
+  const dependencies = new Dependencies(tasks, 2)
+
+  // run the gant computation
   runGantEngine(tasks)
+
+  // apply the header after we have computed the gant, because until we compute the gant, we
+  // don't know the project duration
+  applyHeader()
+
 }
 function runGantEngine(tasks) {
   // accummulate the current story points
@@ -43,7 +50,7 @@ function runGantEngine(tasks) {
     if (endOfTasks) {
       return;
     }
-    
+
     let taskIgnored = !team
 
     team = checkIgnoreTeam(team)
