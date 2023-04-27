@@ -79,11 +79,9 @@ function runGantEngine(tasks) {
       // determine which sprint that the task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
-      let firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity'])
+      const  firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + maxDependencySprintNo
 
-      firstSprintNo = Math.max(firstSprintNo, maxDependencySprintNo)
-
-      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity'])
+      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + maxDependencySprintNo
 
       const teamBg = globals.config.team[team]['bg']
 
@@ -157,6 +155,8 @@ function runGantEngine(tasks) {
 }
 
 function getMaxDependencySprintNo(task) {
-  return 0
+  let maxSprintNo = 0
+
+  return maxSprintNo
 }
 
