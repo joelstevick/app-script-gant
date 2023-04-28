@@ -106,21 +106,19 @@ function runGantEngine(tasks) {
       }
       // if this column contains dependencies, then highlight it
       if (dependencies.getDependencies(task).length > 0) {
-        SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
-        SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
+
+        SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
+        .setBorder(true, true, true, true, true, true, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
       }
 
       // if this task has dependents, then highlight it
       if (dependencies.getDependents(task).length > 0) {
         // team, ticket and summary
-        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
-        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
+        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
 
-        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
-        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
+        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
 
-        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
-        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
+        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
 
       }
       // accumulate the story points from the designated column
