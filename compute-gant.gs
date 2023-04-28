@@ -108,17 +108,22 @@ function runGantEngine(tasks) {
       if (dependencies.getDependencies(task).length > 0) {
 
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
-        .setBorder(true, true, true, true, true, true, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        .setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
+        .setBackground("lightgray")
       }
 
       // if this task has dependents, then highlight it
       if (dependencies.getDependents(task).length > 0) {
         // team, ticket and summary
         SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBackground("lightgray")
 
         SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBackground("lightgray")
 
         SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBackground("lightgray")
 
       }
       // accumulate the story points from the designated column
