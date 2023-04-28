@@ -30,6 +30,8 @@ function runGantEngine(tasks) {
   const completedColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("completed"))
   const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
   const ticketColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("ticket"))
+  const summaryColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("summary"))
+
   const dependenciesColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("dependencies"))
 
   const dependenciesSprints = {}
@@ -83,6 +85,9 @@ function runGantEngine(tasks) {
 
       const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + maxDependencySprintNo
 
+      // retain the lastSprintNo for use in calculating the starting sprint for any dependents
+      task.lastSprintNo = lastSprintNo
+
       const teamBg = globals.config.team[team]['bg']
 
       // fill in the bg for the related sprint
@@ -99,15 +104,20 @@ function runGantEngine(tasks) {
       // if this column contains dependencies, then highlight it
       if (dependencies.getDependencies(task).length > 0) {
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
-
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
       }
 
       // if this task has dependents, then highlight it
       if (dependencies.getDependents(task).length > 0) {
-        SpreadsheetApp.getActiveSheet().getRange(`${row}:${row}`).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
-        SpreadsheetApp.getActiveSheet().getRange(`${row}:${row}`).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
+        // team, ticket and summary
+        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
+        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
 
+        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
+        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
+
+        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
+        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || '#ff6961')
 
       }
       // accumulate the story points from the designated column
