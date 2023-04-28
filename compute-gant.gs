@@ -98,7 +98,17 @@ function runGantEngine(tasks) {
       }
       // if this column contains dependencies, then highlight it
       if (dependencies.getDependencies(task).length > 0) {
+        SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
+
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1).setBackground(globals.config['dependencies-col-bg-color'] || 'red')
+      }
+
+      // if this task has dependents, then highlight it
+      if (dependencies.getDependents(task).length > 0) {
+        SpreadsheetApp.getActiveSheet().getRange(`${row}:${row}`).setFontColor(globals.config['dependencies-col-font-color'] || 'white')
+        SpreadsheetApp.getActiveSheet().getRange(`${row}:${row}`).setBackground(globals.config['dependencies-col-bg-color'] || 'red')
+
+
       }
       // accumulate the story points from the designated column
       currPoints += task[pointsColNo]
