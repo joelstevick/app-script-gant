@@ -42,6 +42,8 @@ function runGantEngine(tasks) {
 
   tasks.forEach(task => {
 
+    let depenendcySprintsSkipped = 0
+
     // get the team.  Ignore tasks that have a team that starts with "?"
     let team = task[teamColNo]
 
@@ -78,12 +80,14 @@ function runGantEngine(tasks) {
       // get the maximum scheduled completion sprintNo for each dependency
       const maxDependencySprintNo = getMaxDependencySprintNo(task)
 
+      depenendcySprintsSkipped += maxDependencySprintNo
+
       // determine which sprint that the task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
-      const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + maxDependencySprintNo
+      const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
 
-      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + maxDependencySprintNo
+      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
 
       // retain the lastSprintNo for use in calculating the starting sprint for any dependents
       task.lastSprintNo = lastSprintNo
