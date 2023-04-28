@@ -4,7 +4,6 @@ function computeGant() {
   if (!globals.config) {
     throw new Error('No ::project-config::')
   }
-  console.log('config', globals.config);
 
   // compute the gant chart for each task
   // read all of the rows below the header
@@ -78,7 +77,7 @@ function runGantEngine(tasks) {
     if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
 
       // get the maximum scheduled completion sprintNo for each dependency
-      const maxDependencySprintNo = getMaxDependencySprintNo(task)
+      const maxDependencySprintNo = getMaxDependencySprintNo(task, dependencies)
 
       depenendcySprintsSkipped += maxDependencySprintNo
 
@@ -182,8 +181,15 @@ function runGantEngine(tasks) {
   })
 }
 
-function getMaxDependencySprintNo(task) {
+function getMaxDependencySprintNo(task, dependencies) {
   let maxSprintNo = 0
+
+  // get all dependencies
+  const dependencyTasks = dependencies.getDependencies(task)
+
+  dependencyTasks.forEach(dependencyTask => {
+    maxSprintNo = Math.max(maxSprintNo, dependencyTask.lastSprintNo)
+  })
 
   return maxSprintNo
 }
