@@ -6,60 +6,12 @@ function checkIgnoreTeam(team) {
 
   return team
 }
-function computeNumberOfSprints() {
-  // read all of the rows below the header
-  const tasks = globals.sheet.slice(3)
+function computeNumberOfSprints(tasks) {
 
-
-  // accummulate the story points
-  let teamPoints = {}
-
-  const pointsColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("points"))
-  const statusColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("status"))
-  const teamColNo = globals.config.schema.findIndex(colDef => colDef.semantics && colDef.semantics.includes("team"))
-
-  let endOfTasks = false;
-  // determine the total number of sprints, for each team
-  tasks.forEach(task => {
-
-    let team = task[teamColNo]
-
-    team = checkIgnoreTeam(team)
-
-    // check for end of task list
-    if (team.includes(Constants.endOfTasksString)) {
-      endOfTasks = true;
-    }
-
-    if (endOfTasks) {
-      return;
-    }
-
-    // accumulate the points for this team
-    let currPoints = teamPoints[team] || 0
-
-    // ignore completed tasks or tasks that are not assigned to a team
-    if (task[statusColNo] !== globals.config['status-completed'] && task[teamColNo].trim().length > 0) {
-      // locate the story points column
-      currPoints += task[pointsColNo] || 0
-
-      teamPoints[team] = currPoints
-    }
-  })
-
-  // for each team, calculate the required sprints
-  const sprints = []
-  for (let team of Object.keys(teamPoints)) {
-    team = checkIgnoreTeam(team)
-
-    if (team) {
-      const teamVelocity = globals.config.team[team]['velocity']
-      const teamSprintsRequired = Math.ceil(teamPoints[team] / teamVelocity)
-      sprints.push(teamSprintsRequired)
-    }
-  }
-
-  globals.numberOfSprints = Math.max(...sprints)
+  globals.numberOfSprints = tasks.reduce(
+    (lastSprintNo, task) => Math.max(lastSprintNo, task.lastSprintNo || 0 ),
+    0
+  )
 
   // sanity check
   const MAX_SPRINTS = 12

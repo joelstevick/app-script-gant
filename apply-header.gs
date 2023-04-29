@@ -1,4 +1,4 @@
-function applyHeader() {
+function applyHeader(tasks) {
   // get the header
   const headerRange = SpreadsheetApp.getActiveSheet().getRange("A2:Z2");
 
@@ -24,7 +24,7 @@ function applyHeader() {
   })
 
   // add the sprints
-  computeNumberOfSprints()
+  computeNumberOfSprints(tasks)
 
   let sprintLabel = new Date(globals.startDateMs)
   // display end of sprint as the label

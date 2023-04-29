@@ -9,13 +9,12 @@ function computeGant() {
   // read all of the rows below the header
   const tasks = globals.sheet.slice(2)
 
-
   // run the gant computation
   runGantEngine(tasks)
 
   // apply the header after we have computed the gant, because until we compute the gant, we
   // don't know the project duration
-  applyHeader()
+  applyHeader(tasks)
 
 }
 function runGantEngine(tasks) {
