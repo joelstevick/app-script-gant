@@ -79,14 +79,23 @@ function runGantEngine(tasks) {
       // get the maximum scheduled completion sprintNo for each dependency
       const maxDependencySprintNo = getMaxDependencySprintNo(task, dependencies)
 
-      depenendcySprintsSkipped += maxDependencySprintNo
 
       // determine which sprint that the task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
-      const firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
+      let firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
 
-      const lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
+      let lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
+
+      // if the dependency sprints are not yet scheduled for completion, then adjust
+      if (maxDependencySprintNo >= firstSprintNo) {
+        const delta = maxDependencySprintNo - firstSprintNo
+
+        firstSprintNo += delta
+        lastSprintNo += delta
+        depenendcySprintsSkipped += (delta)
+
+      }
 
       // retain the lastSprintNo for use in calculating the starting sprint for any dependents
       task.lastSprintNo = lastSprintNo
@@ -108,9 +117,9 @@ function runGantEngine(tasks) {
       if (dependencies.getDependencies(task).length > 0) {
 
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
-        .setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+          .setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
-        .setBackground("lightgray")
+          .setBackground("lightgray")
       }
 
       // if this task has dependents, then highlight it
