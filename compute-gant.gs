@@ -118,20 +118,20 @@ function runGantEngine(tasks) {
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
           .setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
-          .setBackground("lightgray")
+          .setBackground("#f4f4f4")
       }
 
       // if this task has dependents, then highlight it
       if (dependencies.getDependents(task).length > 0) {
         // team, ticket and summary
         SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
-        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBackground("lightgray")
+        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBackground("#f4f4f4")
 
         SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
-        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBackground("lightgray")
+        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBackground("#f4f4f4")
 
         SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
-        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBackground("lightgray")
+        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBackground("#f4f4f4")
 
       }
       // accumulate the story points from the designated column
@@ -175,11 +175,11 @@ function runGantEngine(tasks) {
         if (globals.config.team[team] && task[statusColNo] === globals.config['status-completed']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
         } else if (task[statusColNo] === globals.config['status-deferred']) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || 'lightgray')
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || '#f4f4f4')
         } else if (task[statusColNo] === globals.config['status-cannot-reproduce']) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || 'lightgray')
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['cannot=reproduce-row-font-color'] || '#f4f4f4')
         } else if (task[statusColNo] === globals.config['status-replaced']) {
-          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || 'lightgray')
+          SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['replaced-row-font-color'] || '#f4f4f4')
         } else if (taskIgnored) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['ignored-row-font-color'] || 'orange')
         }
