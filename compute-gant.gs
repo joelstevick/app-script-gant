@@ -116,7 +116,7 @@ function runGantEngine(tasks) {
       if (dependencies.getDependencies(task).length > 0) {
 
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
-          .setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+          .setBorder(true, false, false, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
         SpreadsheetApp.getActiveSheet().getRange(row, dependenciesColNo + 1)
           .setBackground("#f4f4f4")
       }
@@ -124,13 +124,13 @@ function runGantEngine(tasks) {
       // if this task has dependents, then highlight it
       if (dependencies.getDependents(task).length > 0) {
         // team, ticket and summary
-        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBorder(true, false, false, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
         SpreadsheetApp.getActiveSheet().getRange(row, teamColNo + 1).setBackground("#f4f4f4")
 
-        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBorder(true, false, false, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
         SpreadsheetApp.getActiveSheet().getRange(row, ticketColNo + 1).setBackground("#f4f4f4")
 
-        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBorder(true, false, true, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
+        SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBorder(true, false, false, false, false, false, globals.config['dependencies-col-border-color'] || "#ff6961", SpreadsheetApp.BorderStyle.SOLID_MEDIUM)
         SpreadsheetApp.getActiveSheet().getRange(row, summaryColNo + 1).setBackground("#f4f4f4")
 
       }
