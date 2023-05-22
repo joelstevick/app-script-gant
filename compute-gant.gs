@@ -73,7 +73,7 @@ function runGantEngine(tasks) {
     }
 
     // ignore completed tasks
-    if (globals.config.team[team] && !globals.config['status-completed'].includes(task[statusColNo])) {
+    if (globals.config.team[team] && (!task[statusColNo] || !globals.config['status-completed'].includes(task[statusColNo]))) {
 
       // get the maximum scheduled completion sprintNo for each dependency
       const maxDependencySprintNo = getMaxDependencySprintNo(task, dependencies)
@@ -199,7 +199,7 @@ function getMaxDependencySprintNo(task, dependencies) {
   const dependencyTasks = dependencies.getDependencies(task)
 
   dependencyTasks.forEach(dependencyTask => {
-    maxSprintNo = Math.max(maxSprintNo, dependencyTask.lastSprintNo)
+    maxSprintNo = Math.max(maxSprintNo, dependencyTask.lastSprintNo || 0)
   })
 
   return maxSprintNo
