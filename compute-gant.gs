@@ -73,7 +73,7 @@ function runGantEngine(tasks) {
     }
 
     // ignore completed tasks
-    if (globals.config.team[team] && task[statusColNo] !== globals.config['status-completed']) {
+    if (globals.config.team[team] && !globals.config['status-completed'].includes(task[statusColNo])) {
 
       // get the maximum scheduled completion sprintNo for each dependency
       const maxDependencySprintNo = getMaxDependencySprintNo(task, dependencies)
@@ -172,7 +172,7 @@ function runGantEngine(tasks) {
       // change the foreground color for the entire row
       for (let col = 1; col <= globals.config.schema.length; col++) {
 
-        if (globals.config.team[team] && task[statusColNo] === globals.config['status-completed']) {
+        if (globals.config.team[team] && globals.config['status-completed'].includes(task[statusColNo])) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['completed-row-font-color'] || 'green')
         } else if (task[statusColNo] === globals.config['status-deferred']) {
           SpreadsheetApp.getActiveSheet().getRange(row, col).setFontColor(globals.config['deferred-row-font-color'] || '#f4f4f4')
