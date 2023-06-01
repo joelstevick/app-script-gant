@@ -16,7 +16,7 @@ function computeNumberOfSprints(tasks) {
   // sanity check
   const MAX_SPRINTS = 12
   if (globals.numberOfSprints > MAX_SPRINTS) {
-    trace(`MAX_SPRINTS exceeded: ${globals.numberOfSprints}, sprints = ${sprints}`)
+    trace(`MAX_SPRINTS exceeded: ${globals.numberOfSprints}, sprints = ${globals.numberOfSprints}`)
     globals.numberOfSprints = MAX_SPRINTS
   }
   // compute the starting date and the ending date; If the ending for the sprint is in the past, then pick the
