@@ -1,0 +1,4 @@
+function showCompletedRows() {
+    updateCompletedRowVisibilility(true)
+
+}
