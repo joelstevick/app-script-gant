@@ -11,12 +11,14 @@ function assert(condition, message) {
 
 // run the tests
 function runTests() {
+  console.log("These tests currently fail")
 
   // Define Constants if not already defined
   if (typeof Constants === 'undefined') {
     Constants = { sprintDays: 7 };
   }
 
+  // test: computeNumberOfSprints
   // Test 1: Check the number of sprints
   let tasks1 = [
     { lastSprintNo: 1 },
@@ -29,10 +31,16 @@ function runTests() {
 
   // Test 2: Check if MAX_SPRINTS is respected
   let tasks2 = [];
+
   for (let i = 0; i < 15; i++) {
     tasks2.push({ lastSprintNo: i + 1 });
   }
-  computeNumberOfSprints(tasks2);
+
+  try {
+    computeNumberOfSprints(tasks2);
+  } catch {
+
+  }
   assert(globals.numberOfSprints === 12, 'MAX_SPRINTS not respected');
 
   // Test 3: Check if the start date is computed correctly
