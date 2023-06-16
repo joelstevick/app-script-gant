@@ -9,7 +9,7 @@ function updateCompletedRowVisibilility(visible) {
 
   tasks.forEach(task => {
 
-    const isCompleted = globals.config['status-completed'].includes(task[statusColNo])
+    const isCompleted = task[statusColNo] === 'completed'
 
     if (isCompleted) {
 
