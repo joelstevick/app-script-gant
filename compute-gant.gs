@@ -38,9 +38,9 @@ function runGantEngine(tasks) {
   let row = 3
   let endOfTasks = false;
 
-  tasks.forEach(task => {
+  let dependencySprintsSkipped = 0
 
-    let depenendcySprintsSkipped = 0
+  tasks.forEach(task => {
 
     // get the team.  Ignore tasks that have a team that starts with "?"
     let team = task[teamColNo]
@@ -82,9 +82,9 @@ function runGantEngine(tasks) {
       // determine which sprint that the task belongs to
       let currPoints = currentTeamPoints[team] || 0
 
-      let firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
+      let firstSprintNo = Math.floor(currPoints / globals.config.team[team]['velocity']) + dependencySprintsSkipped
 
-      let lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + depenendcySprintsSkipped
+      let lastSprintNo = Math.ceil((task[pointsColNo] + currPoints) / globals.config.team[team]['velocity']) + dependencySprintsSkipped
 
       // if the dependency sprints are not yet scheduled for completion, then adjust
       if (maxDependencySprintNo >= firstSprintNo) {
@@ -92,7 +92,7 @@ function runGantEngine(tasks) {
 
         firstSprintNo += delta
         lastSprintNo += delta
-        depenendcySprintsSkipped += (delta)
+        dependencySprintsSkipped += (delta)
 
       }
 
