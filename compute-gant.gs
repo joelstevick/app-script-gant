@@ -40,6 +40,8 @@ function runGantEngine(tasks) {
 
   let dependencySprintsSkipped = 0
 
+  let prevTeam = ''
+
   tasks.forEach(task => {
 
     // get the team.  Ignore tasks that have a team that starts with "?"
@@ -58,6 +60,14 @@ function runGantEngine(tasks) {
 
     team = checkIgnoreTeam(team)
 
+    // reset when crossing team boudaries
+    if (prevTeam && team !== prevTeam) {
+      console.log(`crossing team boundary ${prevTeam} => ${team}`)
+      dependencySprintsSkipped = 0
+    }
+    prevTeam = team
+
+    // check for ignored tasks
     taskIgnored = !taskIgnored && !team
 
     // initialize column style (for tasks that are assigned to a team)
