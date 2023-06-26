@@ -14,7 +14,7 @@ function computeNumberOfSprints(tasks) {
   )
 
   // sanity check
-  const MAX_SPRINTS = 12
+  const MAX_SPRINTS = 30
   if (globals.numberOfSprints > MAX_SPRINTS) {
     console.log(`MAX_SPRINTS exceeded: ${globals.numberOfSprints}`)
     globals.numberOfSprints = MAX_SPRINTS

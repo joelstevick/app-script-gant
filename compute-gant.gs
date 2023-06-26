@@ -157,7 +157,7 @@ function runGantEngine(tasks) {
     ) {
 
       // completed, replaced or deferred
-      const maxGantColumns = 20
+      const maxGantColumns = 30
 
       // clear all gant columns
       for (let i = 0; i < maxGantColumns; i++) {
