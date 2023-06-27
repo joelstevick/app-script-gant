@@ -49,11 +49,13 @@ function applyHeader(tasks) {
   }
 
   // add the release date
-  const releaseDate = sprintLabel
-  releaseDate.setDate(releaseDate.getDate() - labelOffsetDays)
-  releaseDate.setDate(releaseDate.getDate() + globals.config.release['allowance-days'])
+  if (false) {
+    const releaseDate = sprintLabel
+    releaseDate.setDate(releaseDate.getDate() - labelOffsetDays)
+    releaseDate.setDate(releaseDate.getDate() + globals.config.release['allowance-days'])
 
-  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(`Dev Completed: ` + releaseDate.toLocaleDateString())
-  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(globals.config.release.bg)
-  SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(globals.config.release.color)
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setValue(releaseDate.toLocaleDateString())
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setBackground(globals.config.release.bg)
+    SpreadsheetApp.getActiveSheet().getRange(2, colNum).setFontColor(globals.config.release.color)
+  }
 }
